@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Health education website by Tanaka Muzamayi" />
+  <title>Tanaka Muzamayi — Health Education</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a33;
+      --muted:#8ea0c7;
+      --text:#eef2ff;
+      --brand:#7c3aed;
+      --brand2:#22c55e;
+      --ring:rgba(124,58,237,.45);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --ok:#22c55e;
+    }
+    [data-theme="light"]{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --muted:#4b5563;
+      --text:#0f172a;
+      --brand:#6d28d9;
+      --brand2:#16a34a;
+      --ring:rgba(109,40,217,.25);
+      --shadow:0 10px 30px rgba(15,23,42,.12);
+      --warn:#b45309;
+      --danger:#b91c1c;
+      --ok:#15803d;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 900px at 20% -10%, rgba(124,58,237,.35), transparent 55%),
+                  radial-gradient(1100px 700px at 90% 0%, rgba(34,197,94,.25), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1120px; margin:0 auto; padding:0 20px}
+
+    /* Top bar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      border-bottom:1px solid color-mix(in srgb, var(--text) 10%, transparent);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.2px}
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: var(--shadow);
+    }
+    .navlinks{display:flex; gap:16px; align-items:center}
+    .navlinks a{
+      padding:10px 12px; border-radius:12px;
+      color:color-mix(in srgb, var(--text) 92%, var(--muted));
+    }
+    .navlinks a:hover{background: color-mix(in srgb, var(--card) 70%, transparent)}
+
+    .actions{display:flex; gap:10px; align-items:center}
+    .btn{
+      appearance:none; border:0; cursor:pointer;
+      padding:10px 12px; border-radius:12px;
+      background: color-mix(in srgb, var(--card) 78%, transparent);
+      color:var(--text);
+      box-shadow: 0 1px 0 color-mix(in srgb, var(--text) 10%, transparent) inset;
+      transition: transform .08s ease, box-shadow .2s ease;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn:hover{box-shadow:0 0 0 4px var(--ring)}
+    .btn:active{transform:translateY(1px)}
+
+    .primary{
+      background: linear-gradient(135deg, var(--brand), color-mix(in srgb, var(--brand2) 55%, var(--brand)));
+      box-shadow: var(--shadow);
+    }
+
+    .menuBtn{display:none}
+
+    /* Hero */
+    .hero{padding:62px 0 18px}
+    .heroGrid{display:grid; grid-template-columns: 1.2fr .8fr; gap:22px; align-items:stretch}
+    .card{
+      background: color-mix(in srgb, var(--card) 82%, transparent);
+      border:1px solid color-mix(in srgb, var(--text) 10%, transparent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .heroCard{padding:28px}
+    .kicker{color:var(--muted); font-weight:650; letter-spacing:.2px}
+    h1{margin:10px 0 10px; font-size:clamp(32px, 4vw, 56px); line-height:1.06}
+    .lead{margin:0 0 14px; color:color-mix(in srgb, var(--text) 85%, var(--muted)); font-size:1.05rem}
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+
+    .side{padding:18px; display:grid; gap:12px}
+    .notice{padding:16px; border-radius:16px; background: color-mix(in srgb, var(--card) 88%, transparent);
+      border:1px solid color-mix(in srgb, var(--text) 9%, transparent);
+    }
+    .notice strong{display:block; font-size:1.05rem; margin-bottom:6px}
+    .notice p{margin:0; color:var(--muted)}
+
+    .badgeRow{margin-top:14px; display:flex; gap:10px; flex-wrap:wrap}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      background: color-mix(in srgb, var(--card) 88%, transparent);
+      border:1px solid color-mix(in srgb, var(--text) 10%, transparent);
+      color:color-mix(in srgb, var(--text) 92%, var(--muted));
+      font-weight:650; font-size:.92rem;
+    }
+    .pillDot{width:9px; height:9px; border-radius:999px; background: var(--brand)}
+
+    /* Sections */
+    section{padding:34px 0}
+    .sectionTitle{display:flex; align-items:end; justify-content:space-between; gap:14px; margin-bottom:16px}
+    .sectionTitle h2{margin:0; font-size:1.6rem}
+    .sectionTitle p{margin:0; color:var(--muted)}
+
+    .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
+    .grid2{display:grid; grid-template-columns: repeat(2, 1fr); gap:14px}
+
+    .tile{padding:18px; border-radius:18px}
+
+    .topicTitle{margin:10px 0 6px; font-size:1.1rem}
+    .topicDesc{margin:0; color:var(--muted)}
+
+    /* Guide */
+    .guide{padding:22px}
+    .guideNav{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px}
+    .chip{
+      border:1px solid color-mix(in srgb, var(--text) 12%, transparent);
+      background: color-mix(in srgb, var(--card) 86%, transparent);
+      color:color-mix(in srgb, var(--text) 92%, var(--muted));
+      padding:8px 10px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:650;
+    }
+    .chip[aria-selected="true"]{box-shadow:0 0 0 4px var(--ring)}
+
+    .guide h3{margin:12px 0 8px}
+    .cols{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
+    .box{
+      padding:14px;
+      border-radius:16px;
+      border:1px solid color-mix(in srgb, var(--text) 10%, transparent);
+      background: color-mix(in srgb, var(--card) 90%, transparent);
+    }
+    .box h4{margin:0 0 8px; font-size:1rem}
+    .box ul{margin:0; padding-left:18px}
+    .tag{display:inline-flex; align-items:center; gap:8px; font-weight:700}
+    .dot{width:10px; height:10px; border-radius:999px; background:var(--ok)}
+    .dot.warn{background:var(--warn)}
+    .dot.danger{background:var(--danger)}
+
+    /* Contact */
+    .contactWrap{padding:22px}
+    form{display:grid; gap:12px; margin-top:10px}
+    label{font-weight:650; color:color-mix(in srgb, var(--text) 90%, var(--muted))}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid color-mix(in srgb, var(--text) 14%, transparent);
+      background: color-mix(in srgb, var(--card) 88%, transparent);
+      color:var(--text);
+      outline:none;
+    }
+    input:focus, textarea:focus{box-shadow:0 0 0 4px var(--ring)}
+    textarea{min-height:120px; resize:vertical}
+    .hint{color:var(--muted); font-size:.92rem; margin:0}
+
+    footer{padding:26px 0 40px; color:var(--muted)}
+    .footerRow{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap}
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .heroGrid{grid-template-columns: 1fr;}
+      .grid3{grid-template-columns: 1fr;}
+      .grid2{grid-template-columns: 1fr;}
+      .cols{grid-template-columns: 1fr;}
+      .menuBtn{display:inline-flex}
+      .navlinks{display:none; position:absolute; left:0; right:0; top:62px; padding:12px 20px;
+        background: color-mix(in srgb, var(--bg) 86%, transparent);
+        border-bottom:1px solid color-mix(in srgb, var(--text) 10%, transparent);
+        flex-direction:column; align-items:flex-start;
+      }
+      .navlinks.show{display:flex}
+      .navlinks a{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Home">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Tanaka Muzamayi</span>
+        </a>
+
+        <nav class="navlinks" id="navlinks">
+          <a href="#about">About</a>
+          <a href="#topics">Topics</a>
+          <a href="#guides">Guides</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <button class="btn menuBtn" id="menuBtn" aria-label="Open menu">☰</button>
+          <button class="btn" id="themeBtn" aria-label="Toggle theme">🌓 Theme</button>
+          <a class="btn primary" href="#guides">Read a guide</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="container">
+      <section class="hero">
+        <div class="heroGrid">
+          <div class="card heroCard">
+            <div class="kicker">Hi — I’m <span style="color:color-mix(in srgb, var(--text) 96%, var(--muted))">Tanaka Muzamayi</span>, an aspiring doctor.</div>
+            <h1>Health issues, explained in clear, practical language.</h1>
+            <p class="lead">This site shares educational information about common symptoms, prevention, and when to seek care.
+              It does not replace advice from a qualified health professional.</p>
+
+            <div class="ctaRow">
+              <a class="btn primary" href="#guides">Start learning</a>
+              <a class="btn" href="#topics">Common topics</a>
+              <a class="btn" href="#contact">Ask a question</a>
+            </div>
+
+            <div class="badgeRow">
+              <span class="pill"><span class="pillDot"></span>Prevention</span>
+              <span class="pill"><span class="pillDot" style="background:var(--brand2)"></span>Red flags</span>
+              <span class="pill"><span class="pillDot" style="background:color-mix(in srgb, var(--brand) 60%, var(--brand2))"></span>Care basics</span>
+            </div>
+          </div>
+
+          <aside class="card side">
+            <div class="notice">
+              <strong>⚠️ Medical disclaimer</strong>
+              <p>Educational content only. If you have severe symptoms, a medical emergency, or a persistent problem, seek care from a licensed clinician.</p>
+            </div>
+            <div class="notice">
+              <strong>🚑 Emergency warning signs</strong>
+              <p>Chest pain, severe breathing trouble, fainting, severe bleeding, sudden weakness on one side, seizures, or confusion → get urgent help immediately.</p>
+            </div>
+            <div class="notice">
+              <strong>✅ How to use this site</strong>
+              <p>Read the guide, check the “when to seek care” section, and contact me for topic suggestions.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="sectionTitle">
+          <div>
+            <h2>About</h2>
+            <p>Why this site exists and how to use it safely.</p>
+          </div>
+          <span class="pill">Health Education • Prevention • Care</span>
+        </div>
+
+        <div class="card tile">
+          <p style="margin:0; color:color-mix(in srgb, var(--text) 88%, var(--muted)); font-size:1.05rem">
+            <strong>About me:</strong> I’m Tanaka Muzamayi, an aspiring doctor passionate about helping people understand their health.
+            Here you’ll find plain-language guides on symptoms, risk factors, prevention, and safe first steps.
+            <br><br>
+            <strong>Important:</strong> This content is general information. It can’t diagnose you. If symptoms are severe, sudden,
+            worsening, or you’re worried — visit a clinic or hospital.
+          </p>
+        </div>
+      </section>
+
+      <section id="topics">
+        <div class="sectionTitle">
+          <div>
+            <h2>Topics</h2>
+            <p>Common health issues I cover.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="card tile">
+            <span class="pill"><span class="pillDot"></span>Prevention</span>
+            <div class="topicTitle">Healthy living basics</div>
+            <p class="topicDesc">Nutrition, hydration, sleep, exercise, and stress management.</p>
+          </div>
+          <div class="card tile">
+            <span class="pill"><span class="pillDot" style="background:var(--brand2)"></span>Common conditions</span>
+            <div class="topicTitle">Symptoms & causes</div>
+            <p class="topicDesc">Fever, cough, headaches, stomach pain, skin rashes, allergies.</p>
+          </div>
+          <div class="card tile">
+            <span class="pill"><span class="pillDot" style="background:color-mix(in srgb, var(--brand) 60%, var(--brand2))"></span>Care guidance</span>
+            <div class="topicTitle">When to seek care</div>
+            <p class="topicDesc">Red flags, what to try safely at home, and when to go urgently.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="guides">
+        <div class="sectionTitle">
+          <div>
+            <h2>Guides</h2>
+            <p>Select a guide to read (educational).</p>
+          </div>
+          <span class="pill">Tip: share your country for local hotline numbers</span>
+        </div>
+
+        <div class="card guide" id="guideCard">
+          <div class="guideNav" role="tablist" aria-label="Health guides">
+            <button class="chip" role="tab" aria-selected="true" data-guide="fever">Fever</button>
+            <button class="chip" role="tab" aria-selected="false" data-guide="cough">Cough & Cold</button>
+            <button class="chip" role="tab" aria-selected="false" data-guide="stomach">Stomach pain</button>
+            <button class="chip" role="tab" aria-selected="false" data-guide="headache">Headache</button>
+          </div>
+
+          <div id="guideContent" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="sectionTitle">
+          <div>
+            <h2>Contact</h2>
+            <p>Send suggestions or questions. I usually reply within 1–2 days.</p>
+          </div>
+          <span class="pill">EDIT ME: your email</span>
+        </div>
+
+        <div class="card contactWrap">
+          <p class="hint">This form opens your email app (no backend). To receive messages directly on the site (Formspree / Netlify Forms), tell me where you’ll host it.</p>
+
+          <form id="contactForm">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" placeholder="Your name" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+            </div>
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="What health topic should I cover next?" required></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+              <button class="btn primary" type="submit">Send</button>
+              <p class="hint" style="margin:0">By sending, you confirm this is not an emergency.</p>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footerRow">
+          <span>© <span id="year"></span> Tanaka Muzamayi</span>
+          <span>Educational content • Not medical advice</span>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // Mobile menu
+    const navlinks = document.getElementById('navlinks');
+    const menuBtn = document.getElementById('menuBtn');
+    menuBtn?.addEventListener('click', () => navlinks.classList.toggle('show'));
+
+    // Theme toggle (persist)
+    const themeBtn = document.getElementById('themeBtn');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn?.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Contact form → mailto
+    const CONTACT_EMAIL = 'tanaka@example.com'; // EDIT ME
+    document.querySelector('#contactForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const subject = encodeURIComponent(`Health site message from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\n---\nNote: This message is for general education, not emergency care.`);
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    });
+
+    // Guides content (educational, non-diagnostic)
+    const guides = {
+      fever: {
+        title: 'Fever (Adults & Children)',
+        intro: 'A fever is a higher-than-normal body temperature. It is a symptom, not a disease. Many fevers are caused by infections, but other causes exist.',
+        self: [
+          'Drink fluids regularly (water, oral rehydration solutions).',
+          'Rest and avoid heavy exercise.',
+          'Dress in light layers; keep the room comfortably cool.',
+          'If needed, use fever-reducing medicine according to the label (especially for children—dose by weight).'
+        ],
+        watch: [
+          'Fever lasting more than 3 days.',
+          'Repeated vomiting, signs of dehydration (very dry mouth, no urine for many hours).',
+          'Very young infants with fever need urgent assessment.'
+        ],
+        urgent: [
+          'Trouble breathing, chest pain, or severe weakness.',
+          'Stiff neck, severe headache, confusion, seizure, or rash with fever.',
+          'Child is unusually drowsy, hard to wake, or not drinking.'
+        ]
+      },
+      cough: {
+        title: 'Cough & Cold',
+        intro: 'Most coughs and colds are viral and improve with time. The goal is comfort and monitoring for warning signs.',
+        self: [
+          'Warm fluids (tea/soup) and honey for adults/older children (no honey for infants under 1 year).',
+          'Saline nasal rinse or spray for congestion.',
+          'Rest, hydrate, and avoid smoking or dusty environments.',
+          'Use medications carefully; follow labels and avoid mixing similar ingredients.'
+        ],
+        watch: [
+          'Cough lasting more than 2–3 weeks.',
+          'High fever that returns after improving.',
+          'Wheezing or asthma symptoms not controlled with usual plan.'
+        ],
+        urgent: [
+          'Shortness of breath, lips turning blue, or severe chest pain.',
+          'Coughing blood, or severe dehydration.',
+          'Very fast breathing in a child, or chest indrawing.'
+        ]
+      },
+      stomach: {
+        title: 'Stomach Pain',
+        intro: 'Stomach/abdominal pain can come from digestion issues, infections, ulcers, constipation, or more serious causes. Location and associated symptoms matter.',
+        self: [
+          'Sip fluids; if diarrhoea/vomiting, consider oral rehydration solution.',
+          'Eat small, bland meals (when able) and avoid alcohol or very spicy foods.',
+          'Track: where the pain is, when it started, and what makes it better/worse.',
+          'Avoid self-medicating with strong painkillers on an empty stomach.'
+        ],
+        watch: [
+          'Pain lasting more than 24–48 hours.',
+          'Persistent vomiting, diarrhoea with dehydration, or weight loss.',
+          'Burning upper pain after meals (possible gastritis/ulcer) — seek evaluation.'
+        ],
+        urgent: [
+          'Severe or worsening pain, rigid abdomen, or pain with fainting.',
+          'Blood in vomit or stool, black tarry stool.',
+          'Pain with pregnancy, or severe right-lower pain with fever (appendicitis concern).' 
+        ]
+      },
+      headache: {
+        title: 'Headache',
+        intro: 'Most headaches are tension-type or migraine. The key is recognizing red flags that require urgent assessment.',
+        self: [
+          'Hydrate, rest in a dark quiet room, and avoid screen strain.',
+          'Gentle neck/shoulder stretching and regular meals.',
+          'If you use pain relief, follow the label and avoid overuse (can worsen headaches).',
+          'Keep a headache diary (triggers, timing, foods, sleep, stress).' 
+        ],
+        watch: [
+          'Headaches becoming more frequent or severe over weeks.',
+          'Headache with fever or sinus symptoms that persist.',
+          'New headache after age 50 or with medical conditions—get evaluated.'
+        ],
+        urgent: [
+          '“Worst headache of your life” or sudden thunderclap headache.',
+          'Headache with weakness, vision loss, confusion, seizures, or stiff neck.',
+          'Headache after head injury with vomiting or drowsiness.'
+        ]
+      }
+    };
+
+    function renderGuide(key){
+      const g = guides[key];
+      const el = document.getElementById('guideContent');
+      if(!g || !el) return;
+      el.innerHTML = `
+        <h3>${g.title}</h3>
+        <p style="margin:0 0 10px; color:color-mix(in srgb, var(--text) 86%, var(--muted))">${g.intro}</p>
+        <div class="cols">
+          <div class="box">
+            <div class="tag"><span class="dot"></span> Safe first steps</div>
+            <ul>${g.self.map(x=>`<li>${x}</li>`).join('')}</ul>
+          </div>
+          <div class="box">
+            <div class="tag"><span class="dot warn"></span> See a clinic soon if…</div>
+            <ul>${g.watch.map(x=>`<li>${x}</li>`).join('')}</ul>
+          </div>
+          <div class="box" style="grid-column:1/-1">
+            <div class="tag"><span class="dot danger"></span> Get urgent help now if…</div>
+            <ul>${g.urgent.map(x=>`<li>${x}</li>`).join('')}</ul>
+          </div>
+        </div>
+      `;
+    }
+
+    document.querySelectorAll('.chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-selected','false'));
+        btn.setAttribute('aria-selected','true');
+        renderGuide(btn.dataset.guide);
+      });
+    });
+
+    // Initial render
+    renderGuide('fever');
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Close menu on nav click (mobile)
+    document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => navlinks.classList.remove('show')));
+  </script>
+</body>
+</html>
