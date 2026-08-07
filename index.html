@@ -96,6 +96,8 @@
 
     /* Hero */
     .hero{padding:62px 0 18px}
++    .heroImage{ text-align:center; margin:0 0 18px }
++    .heroImage img{ max-width:420px; width:80%; height:auto; display:block; margin:0 auto }
     .heroGrid{display:grid; grid-template-columns: 1.2fr .8fr; gap:22px; align-items:stretch}
     .card{
       background: color-mix(in srgb, var(--card) 82%, transparent);
@@ -195,7 +197,7 @@
       .heroGrid{grid-template-columns: 1fr;}
       .grid3{grid-template-columns: 1fr;}
       .grid2{grid-template-columns: 1fr;}
-      .cols{grid-template-columns: 1fr;}
+      .cols{grid-template-columns: 1fr}
       .menuBtn{display:inline-flex}
       .navlinks{display:none; position:absolute; left:0; right:0; top:62px; padding:12px 20px;
         background: color-mix(in srgb, var(--bg) 86%, transparent);
@@ -204,6 +206,7 @@
       }
       .navlinks.show{display:flex}
       .navlinks a{width:100%}
++      .heroImage img{ width:60%; max-width:300px }
     }
   </style>
 </head>
@@ -235,6 +238,9 @@
   <main id="top">
     <div class="container">
       <section class="hero">
++        <div class="heroImage">
++          <img src="assets/images/crucial-logo.png" alt="CRUCIAL logo — navy and red circular medical emblem with caduceus" loading="eager" />
++        </div>
         <div class="heroGrid">
           <div class="card heroCard">
             <div class="kicker">Hi — I’m <span style="color:color-mix(in srgb, var(--text) 96%, var(--muted))">Tanaka Muzamayi</span>, MSU medical student and an aspiring doctor.</div>
@@ -471,7 +477,7 @@
         urgent: [
           'Severe or worsening pain, rigid abdomen, or pain with fainting.',
           'Blood in vomit or stool, black tarry stool.',
-          'Pain with pregnancy, or severe right-lower pain with fever (appendicitis concern).' 
+          'Pain with pregnancy, or severe right-lower pain with fever (appendicitis concern).'
         ]
       },
       headache: {
@@ -481,7 +487,7 @@
           'Hydrate, rest in a dark quiet room, and avoid screen strain.',
           'Gentle neck/shoulder stretching and regular meals.',
           'If you use pain relief, follow the label and avoid overuse (can worsen headaches).',
-          'Keep a headache diary (triggers, timing, foods, sleep, stress).' 
+          'Keep a headache diary (triggers, timing, foods, sleep, stress).'
         ],
         watch: [
           'Headaches becoming more frequent or severe over weeks.',
@@ -539,7 +545,3 @@
   </script>
 </body>
 </html>
-
-
-
-
